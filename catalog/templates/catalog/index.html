@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Catalog{% endblock %}</title>
+  </head>
+  <body>
+    <header>
+      <h2>Menu</h2>
+      <nav>
+        <ul>
+          <li><a href="{% url 'index' %}">Home</a></li>
+          <li><a href="{% url 'create_book' %}">Create Books</a></li>
+        </ul>
+      </nav>
+    </header>
+    <h1>Books</h1>
+
+    {% for book in books %}
+    <p>
+      <a href="{% url 'book_detail' book.pk %} "
+        >{{ book.title }} <br />
+        {{book.id }}
+      </a>
+    </p>
+    {% empty %}
+    <p>No books are available.</p>
+    {% endfor %}
+  </body>
+</html>
