@@ -22,7 +22,8 @@ from django.views.generic import RedirectView  # Automatic redirect
 urlpatterns = [
     path("catalog/", include("catalog.urls")),
     path("admin/", admin.site.urls),
-    path(
-        "", RedirectView.as_view(url="/catalog/", permanent=True)
-    ),  # Automatic redirect
+    # Automatic redirect
+    path("", RedirectView.as_view(url="/catalog/", permanent=True)),
+    # Auth by default from django
+    path("accounts/", include("django.contrib.auth.urls")),
 ]
