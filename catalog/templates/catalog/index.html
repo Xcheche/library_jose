@@ -4,29 +4,60 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Catalog{% endblock %}</title>
+    <!-- Font Awesome CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
   </head>
   <body>
+    <style>
+      .container {
+        margin: 0 auto;
+        padding: 0 auto;
+        text-align: center;
+      }
+    </style>
     <header>
       <h2>Menu</h2>
       <nav>
         <ul>
           <li><a href="{% url 'index' %}">Home</a></li>
-
-          <li><a href="{% url 'create_book' %}">Create Books</a></li>
         </ul>
       </nav>
     </header>
-    <h1>Books</h1>
-
-    {% for book in books %}
-    <p>
-      <a href="{% url 'book_detail' book.pk %} "
-        >{{ book.title }} <br />
-        {{book.id }}
-      </a>
-    </p>
-    {% empty %}
-    <p>No books are available.</p>
-    {% endfor %}
+    <div class="container">
+      <h1>Books</h1>
+      {% for book in books %}
+      <p>
+        <a href="{% url 'book_detail' book.pk %} "
+          >{{ book.title }} <br />
+          {% comment %} {{book.id }} {% endcomment %}
+        </a>
+      </p>
+      {% empty %}
+      <p>No books are available.</p>
+      {% endfor %}
+      <br />
+      {% if user.is_authenticated %}
+      <p>You are Logged In</p>
+      <p>Welcome : {{ user.username }}</p>
+      <li><a href="{% url 'create_book' %}">Create Books</a></li>
+      <!-- <a href="{% url 'logout' %}?next={{ request.path }}">Logout</a> dosent work -->
+      <form id="logout" method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <!-- <input type="hidden" name="next" value="{{ request.path }}"> -->
+        <a
+          href="javascript:{document.getElementById('logout').submit()}"
+          class="nav-link"
+        >
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+      </form>
+      {% else %}
+      <p>You are not Logged In</p>
+      <p><a href="{% url 'login' %}">Login Here</a></p>
+      {% endif %}
+    </div>
   </body>
 </html>

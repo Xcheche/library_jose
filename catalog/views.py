@@ -4,11 +4,11 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView
 from .models import Book, Author, BookInstance, Genre, Language
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Create your views here.
-@login_required
+# @login_required
 def index(request):
     num_books = Book.objects.all().count()
     num_instances = BookInstance.objects.all().count()
@@ -45,7 +45,8 @@ class BookDetailView(DetailView):
 
 
 # Create View
-class CreateBook(CreateView):
+
+class CreateBook(LoginRequiredMixin,CreateView):
     model = Book
     fields = "__all__"
     template_name = "catalog/book_form.html"
