@@ -5,7 +5,7 @@ from django.views.generic import CreateView, DetailView
 from .models import Book, Author, BookInstance, Genre, Language
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
 # @login_required
@@ -51,3 +51,13 @@ class CreateBook(LoginRequiredMixin,CreateView):
     fields = "__all__"
     template_name = "catalog/book_form.html"
     success_url = reverse_lazy("index")
+
+
+#User Registration
+
+class SignUp(CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy("login")
+    template_name = "registration/signup.html"
+    
+    

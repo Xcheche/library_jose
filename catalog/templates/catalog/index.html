@@ -57,6 +57,14 @@
       {% else %}
       <p>You are not Logged In</p>
       <p><a href="{% url 'login' %}">Login Here</a></p>
+      <p>
+        New here?
+        <a href="{% url 'signup' %}" class="text-primary font-weight-bold"
+          >Create an account today</a
+        >
+        to get started.
+      </p>
+
       {% endif %}
     </div>
   </body>
