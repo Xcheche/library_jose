@@ -1,0 +1,13 @@
+<h1>Welcome To Your Profile</h1>
+
+<p>Email: {{ user.email }}</p>
+<p>Username: {{ user.username }}</p>
+<p>Last Login: {{ user.last_login }}</p>
+
+<h2>Here are your Checked Books</h2>
+
+{% for book in bookinstance %}
+<p>{{ book.title }}</p>
+{% empty %}
+<p>No books checked out.</p>
+{% endfor %}

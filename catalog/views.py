@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, ListView
 from .models import Book, Author, BookInstance, Genre, Language
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
+
 
 # Create your views here.
 # @login_required
@@ -46,18 +47,28 @@ class BookDetailView(DetailView):
 
 # Create View
 
-class CreateBook(LoginRequiredMixin,CreateView):
+
+class CreateBook(LoginRequiredMixin, CreateView):
     model = Book
     fields = "__all__"
     template_name = "catalog/book_form.html"
     success_url = reverse_lazy("index")
 
 
-#User Registration
+# User Registration
+
 
 class SignUp(CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy("login")
     template_name = "registration/signup.html"
-    
-    
+
+
+# Checked out books/user_profile
+class CheckedOutBooks(LoginRequiredMixin, ListView):
+    model = BookInstance
+    template_name = "catalog/user_profile.html"
+    context_object_name = "books"
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(borrower=self.request.user, status=0)

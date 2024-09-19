@@ -43,6 +43,7 @@
       <p>You are Logged In</p>
       <p>Welcome : {{ user.username }}</p>
       <li><a href="{% url 'create_book' %}">Create Books</a></li>
+      <li><a href="{% url 'profile' %}">Profile</a></li>
       <!-- <a href="{% url 'logout' %}?next={{ request.path }}">Logout</a> dosent work -->
       <form id="logout" method="post" action="{% url 'logout' %}">
         {% csrf_token %}
